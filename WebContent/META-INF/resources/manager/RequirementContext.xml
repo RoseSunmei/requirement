@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<bean id="requirementService" class="com.wyl.techrequirement.service.impl.RequirementServiceImpl"
+		parent="baseService">
+	</bean>
+
+	<bean id="requirementAction" class="com.wyl.techrequirement.web.action.RequirementAction"
+		scope="prototype">
+		<property name="requirementService" ref="requirementService" />
+		<property name="userService" ref="userService" />
+		<property name="departmentService" ref="departmentService" />
+		<property name="putunderService" ref="putunderService" />
+		<property name="areaService" ref="areaService" />
+		<property name="stateService" ref="stateService" />
+	</bean>
+	
+	<bean id="requirementXSSHAction" class="com.wyl.techrequirement.web.action.RequirementXSSHAction"
+		scope="prototype">
+		<property name="requirementService" ref="requirementService" />
+		<property name="userService" ref="userService" />
+		<property name="departmentService" ref="departmentService" />
+		<property name="putunderService" ref="putunderService" />
+		<property name="areaService" ref="areaService" />
+		<property name="stateService" ref="stateService" />
+	</bean>
+	
+	<bean id="requirementBMSHAction" class="com.wyl.techrequirement.web.action.RequirementBMSHAction"
+		scope="prototype">
+		<property name="requirementService" ref="requirementService" />
+		<property name="userService" ref="userService" />
+		<property name="departmentService" ref="departmentService" />
+		<property name="putunderService" ref="putunderService" />
+		<property name="areaService" ref="areaService" />
+		<property name="stateService" ref="stateService" />
+	</bean>
+	
+	<bean id="requirementTJCXAction" class="com.wyl.techrequirement.web.action.RequirementTJCXAction"
+		scope="prototype">
+		<property name="requirementService" ref="requirementService" />
+		<property name="userService" ref="userService" />
+		<property name="departmentService" ref="departmentService" />
+		<property name="putunderService" ref="putunderService" />
+		<property name="areaService" ref="areaService" />
+		<property name="stateService" ref="stateService" />
+	</bean>
+
+</beans>

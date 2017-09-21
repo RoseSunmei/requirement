@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.wyl.techrequirement.domain">
+	<class name="User" table="user">
+		<id name="userId">
+			<generator class="native" />
+		</id>
+		<property name="userName" />
+		<property name="userPwd" />
+		<property name="userZSXM" />
+		<property name="userSFZ" />
+		<property name="userYX" />
+		<property name="userSJ" />
+		<property name="userJGDM" />
+		<property name="userJGMC" />
+		<property name="userYZBM" />
+		<many-to-one name="department" class="Department" column="department_Id" />
+		<!-- // 多对多：当前用户拥有的角色列表 -->
+		<!-- private Set<Role> roles = new HashSet<Role>(); -->
+		<set name="roles" table="user_role">
+			<key column="user_Id" />
+			<many-to-many class="Role" column="role_Id" />
+		</set>
+	</class>
+</hibernate-mapping>	

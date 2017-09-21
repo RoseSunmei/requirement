@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.wyl.techrequirement.domain">
+	<class name="Requirement" table="requirement">
+		<id name="reqId">
+			<generator class="native" />
+		</id>
+		<property name="reqNum" />
+		<property name="reqXSSH" />
+		<property name="reqXSSHYJ" />
+		<property name="reqBMSH" />
+		<property name="reqBMSHYJ" />
+		<property name="reqJGMC" />
+		<property name="reqTXDZ" />
+		<property name="reqDWWZ" />
+		<property name="reqDZYX" />
+		<property name="reqFRDB" />
+		<property name="reqYZBM" />
+		<property name="reqLXR" />
+		<property name="reqGDDH" />
+		<property name="reqYDDH" />
+		<property name="reqCZ" />
+		<property name="reqJGSX" />
+		<property name="reqJGJJ" type="text"/>
+		<property name="reqJSXQMC" />
+		<property name="reqQSXQNF" />
+		<property name="reqJZXQNF" />
+		<property name="reqJSXQGS" type="text"/>
+		<property name="reqJSXQGS1" type="text"/>
+		<property name="reqJSXQGS2" type="text"/>
+		<property name="reqGJZ" />
+		<property name="reqYJLX" />
+		<property name="reqXKFL" />
+		<property name="reqXQJSSSLY" />
+		<property name="reqQTJSMS" />
+		<property name="reqXQJSYYHY" />
+		<property name="reqJSXQHZMS" />
+		<property name="reqHZYXDW" />
+		<property name="reqJHZTZ" />
+		<!-- private State state;// 状态多对一 -->
+		<many-to-one name="state" class="State" column="sta_Id" />
+		<!-- private User user;// 用户多对一 -->
+		<many-to-one name="user" class="User" column="user_Id" />
+		<!-- private Department department;// 管理处室多对一 -->
+		<many-to-one name="department" class="Department" column="dept_Id" />
+		<!-- private Putunder putunder;// 归口管理部门多对一 -->
+		<many-to-one name="putunder" class="Putunder" column="put_Id" />
+		<!-- private Area area;// 地域多对一 -->
+		<many-to-one name="area" class="Area" column="area_Id" />
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 关闭动态链接 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<!-- 开发者模式 -->
+	<constant name="struts.devMode" value="true" />
+	<!-- 统一处理表单的主题样式 -->
+	<!-- struts.ui.theme=xhtml默认值 -->
+	<constant name="struts.ui.theme" value="simple" />
+
+	<package name="default" namespace="/" extends="struts-default">
+
+		<interceptors>
+			<!-- 定义登录权限拦截器 -->
+			<interceptor name="authInterceptor"
+				class="com.wyl.techrequirement.web.action.interceptor.AuthInterceptor">
+				<!-- 通过配置参数传递不需要拦截的Action给AuthInterceptor -->
+				<!-- AuthInterceptor获取配置参数使用类似于spring的set注入的方法 ：setExcludeActions(String) -->
+				<param name="excludeActions">LoginAction,RegisterAction</param>
+			</interceptor>
+			<!-- 定义拦截器栈 -->
+			<interceptor-stack name="myStack">
+				<!-- 必须先引用登录权限拦截器 -->
+				<interceptor-ref name="authInterceptor" />
+				<!-- 在引入二次参数拦截器 -->
+				<interceptor-ref name="paramsPrepareParamsStack" />
+			</interceptor-stack>
+		</interceptors>
+		<!-- 修改默认的拦截器栈 -->
+		<default-interceptor-ref name="myStack" />
+
+		<!-- 全局返回视图 -->
+		<global-results>
+			<result name="login">/WEB-INF/views/login.jsp</result>
+			<result name="main" type="redirectAction">main</result>
+		</global-results>
+
+		<!-- 登录 -->
+		<action name="login_*" class="loginAction" method="{1}" />
+
+		<!-- 登录进入框架主页 -->
+		<action name="main_*" class="mainAction" method="{1}">
+			<result>/WEB-INF/views/main.jsp</result>
+			<result name="left">/WEB-INF/views/leftPages/accordition.html
+			</result>
+			<result name="right">/WEB-INF/views/templete/open.html</result>
+		</action>
+
+		<!-- 注册框架主页 -->
+		<action name="register_*" class="registerAction" method="{1}">
+			<result>/WEB-INF/views/register.jsp</result>
+			<result name="login">/WEB-INF/views/checklogin.jsp</result>
+			<result name="left">/WEB-INF/views/leftPages/accorditionRegister.html</result>
+			<result name="right">/WEB-INF/views/zhu/zhuce.jsp</result>
+		</action>
+
+		<!-- 公共页面 -->
+		<action name="templete_*" class="templeteAction" method="{1}">
+			<result name="xtjs">/WEB-INF/views/templete/xtjs.html</result>
+			<result name="bzwj">/WEB-INF/views/templete/bzwj.html</result>
+			<result name="cjwtjd">/WEB-INF/views/templete/cjwtjd.html</result>
+		</action>
+
+		<action name="user_*" class="userAction" method="{1}">
+			<!-- 显示列表 -->
+			<result>/WEB-INF/views/user/user.jsp</result>
+			<!-- 显示修改页面 -->
+			<result name="input">/WEB-INF/views/user/user_input.jsp</result>
+			<!-- redirectAction 一般用在内部action直接重定向，不用写后缀名.action -->
+			<!-- redirect 内部之间action必须使用后缀名.action,还可以重定向到http://xxxx -->
+			<!-- 处理重定向请求 -->
+			<result name="reload" type="redirectAction">
+				<param name="actionName">user</param>
+				<param name="baseQuery.currentPage">${baseQuery.currentPage}</param>
+				<param name="baseQuery.pageSize">${baseQuery.pageSize}</param>
+				<param name="baseQuery.userName">${baseQuery.userName}</param>
+				<param name="baseQuery.userJGMC">${baseQuery.userJGMC}</param>
+				<param name="baseQuery.deptId">${baseQuery.deptId}</param>
+				<param name="userId">${userId}</param>
+			</result>
+		</action>
+
+		<action name="modify_*" class="modifyAction" method="{1}">
+			<result>/WEB-INF/views/user/user_yhxx.jsp</result>
+			<result name="input">/WEB-INF/views/user/user_yhxx.jsp</result>
+			<result name="xgmm">/WEB-INF/views/user/user_xgmm.jsp</result>
+		</action>
+		<!-- 需求征集 -->
+		<action name="requirement_*" class="requirementAction" method="{1}">
+			<result>/WEB-INF/views/requirement/requirement.jsp</result>
+			<result name="input">/WEB-INF/views/requirement/requirement_input.jsp</result>
+			<result name="reload" type="redirectAction">requirement</result>
+		</action>
+		<!-- 形式审核 -->
+		<action name="requirementXSSH_*" class="requirementXSSHAction" method="{1}">
+			<result>/WEB-INF/views/requirementXSSH/requirementXSSH.jsp</result>
+			<result name="input">/WEB-INF/views/requirementXSSH/requirementXSSH_input.jsp</result>
+			<result name="reload" type="redirectAction">
+				<param name="actionName">requirementXSSH</param>
+				<param name="baseQuery.currentPage">${baseQuery.currentPage}</param>
+				<param name="baseQuery.pageSize">${baseQuery.pageSize}</param>
+			</result>
+		</action>
+		<!-- 部门审核 -->
+		<action name="requirementBMSH_*" class="requirementBMSHAction" method="{1}">
+			<result>/WEB-INF/views/requirementBMSH/requirementBMSH.jsp</result>
+			<result name="input">/WEB-INF/views/requirementBMSH/requirementBMSH_input.jsp</result>
+			<result name="reload" type="redirectAction">
+				<param name="actionName">requirementBMSH</param>
+				<param name="baseQuery.currentPage">${baseQuery.currentPage}</param>
+				<param name="baseQuery.pageSize">${baseQuery.pageSize}</param>
+			</result>
+		</action>
+		<!-- 统计查询 -->
+		<action name="requirementTJCX_*" class="requirementTJCXAction" method="{1}">
+			<result>/WEB-INF/views/requirementTJCX/requirementTJCX.jsp</result>
+			<result name="input">/WEB-INF/views/requirementTJCX/requirementTJCX_input.jsp</result>
+			<result name="reload" type="redirectAction">
+				<param name="actionName">requirementTJCX</param>
+				<param name="baseQuery.currentPage">${baseQuery.currentPage}</param>
+				<param name="baseQuery.pageSize">${baseQuery.pageSize}</param>
+			</result>
+		</action>
+		
+		<!-- 放置最后：全部通配符，搞定其他所有的crud的action -->
+		<action name="*_*" class="{1}Action" method="{2}">
+			<result>/WEB-INF/views/{1}/{1}.jsp</result>
+			<result name="input">/WEB-INF/views/{1}/{1}_input.jsp</result>
+			<result name="reload" type="redirectAction">{1}</result>
+		</action>
+	</package>
+</struts>
